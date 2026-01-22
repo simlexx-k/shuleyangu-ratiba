@@ -11,6 +11,7 @@ const defaultTemplate = {
     academicYear: '2025',
     coordinator: 'Academic Office',
     showGradeField: false,
+    blankEmptySlotsOnPrint: true,
   },
   days: [
     { id: 'mon', label: 'Monday', short: 'Mon', active: true },
@@ -756,6 +757,10 @@ const shouldShowSlotRange = (slot) => {
             <input v-model="template.meta.showGradeField" type="checkbox" />
             <span>Include grade line on printouts</span>
           </label>
+          <label class="toggle-row">
+            <input v-model="template.meta.blankEmptySlotsOnPrint" type="checkbox" />
+            <span>Hide empty slots on print</span>
+          </label>
         </section>
 
         <section class="panel">
@@ -927,6 +932,7 @@ const shouldShowSlotRange = (slot) => {
                 <button
                   v-else
                   class="session-empty"
+                  :class="{ 'print-blank': template.meta.blankEmptySlotsOnPrint }"
                   type="button"
                   @click="selectCell(day.id, slot.id)"
                 >
