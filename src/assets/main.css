@@ -583,7 +583,7 @@
 
 .slot-time {
   font-size: 8px;
-  color: var(--muted);
+  color: #1f2937;
   letter-spacing: -0.02em;
   white-space: nowrap;
   line-height: 1.1;
