@@ -448,7 +448,14 @@ const applyStandardTemplate = (standard) => {
 
 const buildStandardTemplateHtml = (standard) => {
   const timestamp = new Date().toLocaleString()
-  const gradeRow = template.value.meta.showGradeField ? '<div>Grade: ____________________</div>' : ''
+  const gradeRow = template.value.meta.showGradeField
+    ? `
+      <div class="meta-item">
+        <span class="meta-label">Grade</span>
+        <span class="meta-value meta-line"></span>
+      </div>
+    `
+    : ''
   const headerCells = standard.days.map(day => `<th>${escapeHtml(day)}</th>`).join('')
   const rows = standard.rows
     .map(row => {
@@ -480,26 +487,86 @@ const buildStandardTemplateHtml = (standard) => {
         <meta charset="utf-8" />
     <title>${escapeHtml(standard.title)} | ShuleYangu Ratiba</title>
         <style>
+          @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+          :root {
+            --ink: #0f172a;
+            --muted: #64748b;
+            --line: #e2e8f0;
+            --accent: #0ea5a4;
+            --accent-soft: #ccfbf1;
+            --paper: #ffffff;
+            --paper-alt: #f8fafc;
+            --break: #fef3c7;
+            --lunch: #dbeafe;
+          }
           * { box-sizing: border-box; }
-          body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; color: #0f172a; background: #f8fafc; }
-          .sheet { max-width: 980px; margin: 24px auto; background: #fff; border: 1px solid #e2e8f0; border-radius: 0; padding: 24px; }
-          .print-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; }
+          body { margin: 0; font-family: 'Sora', sans-serif; color: var(--ink); background: #f1f5f9; }
+          .sheet {
+            position: relative;
+            overflow: hidden;
+            max-width: 980px;
+            margin: 24px auto;
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 0;
+            padding: 24px;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+          }
+          .sheet::before {
+            content: "";
+            position: absolute;
+            top: -60px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            background: radial-gradient(circle at top, rgba(14, 165, 164, 0.25), rgba(14, 165, 164, 0));
+            opacity: 0.8;
+            pointer-events: none;
+          }
+          .sheet::after {
+            content: "";
+            position: absolute;
+            left: -60px;
+            bottom: -60px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle at bottom, rgba(37, 99, 235, 0.18), rgba(37, 99, 235, 0));
+            pointer-events: none;
+          }
+          .print-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--line); padding-bottom: 14px; position: relative; z-index: 1; }
+          .print-header::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            width: 140px;
+            height: 3px;
+            background: var(--accent);
+          }
           .print-brand { display: flex; align-items: center; gap: 10px; }
-          .print-logo { width: 36px; height: 36px; border-radius: 10px; border: 1px solid #e2e8f0; object-fit: cover; }
-          .brand-text { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: #64748b; }
-          h1 { margin: 0; font-size: 22px; }
-          .subtitle { margin-top: 6px; font-size: 12px; color: #64748b; }
-          .meta { display: flex; gap: 12px; font-size: 11px; color: #64748b; }
-          table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 12px; }
-          th, td { border: 1px solid #e2e8f0; padding: 8px; text-align: left; vertical-align: top; }
-          th { background: #f1f5f9; text-transform: uppercase; letter-spacing: 0.08em; font-size: 10px; }
-          td.time { font-weight: 600; background: #f8fafc; min-width: 120px; }
-          td.is-break { background: #fef3c7; font-weight: 600; }
-          td.is-lunch { background: #dbeafe; font-weight: 600; }
+          .print-logo { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--line); object-fit: cover; }
+          .brand-text { font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted); }
+          h1 { margin: 4px 0 0; font-family: 'Space Grotesk', sans-serif; font-size: 24px; }
+          .subtitle { margin-top: 6px; font-size: 12px; color: var(--muted); }
+          .meta { display: grid; gap: 8px; font-size: 11px; color: var(--muted); text-align: right; }
+          .meta-item { display: grid; gap: 2px; }
+          .meta-label { text-transform: uppercase; letter-spacing: 0.16em; font-size: 9px; }
+          .meta-value { font-weight: 600; color: var(--ink); }
+          .meta-line { display: inline-block; min-width: 140px; border-bottom: 1px dashed var(--line); height: 14px; }
+          table { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 12px; position: relative; z-index: 1; }
+          th, td { border: 1px solid var(--line); padding: 9px 10px; text-align: left; vertical-align: top; }
+          th { background: var(--paper-alt); text-transform: uppercase; letter-spacing: 0.08em; font-size: 10px; color: var(--muted); }
+          tbody tr:nth-child(even) td { background: #fbfdff; }
+          td.time { font-weight: 600; background: var(--paper-alt); min-width: 130px; }
+          td.is-break { background: var(--break); font-weight: 600; }
+          td.is-lunch { background: var(--lunch); font-weight: 600; }
           td.is-empty { background: #fff; }
           .blank-line { display: block; border-bottom: 1px dashed #cbd5f5; height: 16px; }
-          .footer { margin-top: 16px; font-size: 11px; color: #94a3b8; }
-          @media print { body { background: #fff; } .sheet { border: none; box-shadow: none; } }
+          .footer { margin-top: 16px; font-size: 11px; color: #94a3b8; position: relative; z-index: 1; }
+          @media print {
+            body { background: #fff; }
+            .sheet { border: none; box-shadow: none; }
+          }
         </style>
       </head>
       <body>
@@ -513,8 +580,14 @@ const buildStandardTemplateHtml = (standard) => {
               </div>
             </div>
           <div class="meta">
-            <div>Generated: ${escapeHtml(timestamp)}</div>
-            <div>Ratiba Standard Template</div>
+            <div class="meta-item">
+              <span class="meta-label">Generated</span>
+              <span class="meta-value">${escapeHtml(timestamp)}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Template</span>
+              <span class="meta-value">Standard</span>
+            </div>
             ${gradeRow}
           </div>
           </div>
