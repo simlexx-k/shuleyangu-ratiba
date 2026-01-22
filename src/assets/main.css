@@ -363,7 +363,7 @@
 .template-table th,
 .template-table td {
   border: 1px solid var(--border);
-  padding: 8px 10px;
+  padding: 6px 8px;
   vertical-align: top;
 }
 
@@ -371,8 +371,8 @@
   background: #f1f5f9;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 9px;
-  padding: 6px 8px;
+  font-size: 8px;
+  padding: 5px 6px;
   white-space: nowrap;
 }
 
@@ -509,14 +509,14 @@
 
 .grid-row {
   display: grid;
-  grid-template-columns: 120px repeat(auto-fit, minmax(100px, 1fr));
-  gap: 6px;
+  grid-template-columns: 110px repeat(auto-fit, minmax(90px, 1fr));
+  gap: 4px;
 }
 
 .grid-row.header {
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 12px;
+  font-size: 11px;
   letter-spacing: 0.08em;
 }
 
@@ -531,8 +531,8 @@
 
 .grid-row.header .grid-cell.time {
   text-align: center;
-  padding: 2px 4px;
-  min-height: 40px;
+  padding: 2px 3px;
+  min-height: 36px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -544,8 +544,8 @@
   background: #fff;
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 10px;
-  min-height: 80px;
+  padding: 8px;
+  min-height: 72px;
 }
 
 .grid-cell.day {
@@ -562,16 +562,18 @@
 }
 
 .slot-label {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   white-space: nowrap;
+  line-height: 1.1;
 }
 
 .slot-time {
-  font-size: 10px;
+  font-size: 9px;
   color: var(--muted);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   white-space: nowrap;
+  line-height: 1.1;
 }
 
 .grid-cell.slot {
@@ -660,7 +662,7 @@
   }
 
   .grid-row {
-    grid-template-columns: 120px repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: 110px repeat(auto-fit, minmax(90px, 1fr));
   }
 }
 
@@ -671,7 +673,7 @@
   }
 
   .grid-row {
-    grid-template-columns: 110px repeat(auto-fit, minmax(96px, 1fr));
+    grid-template-columns: 105px repeat(auto-fit, minmax(88px, 1fr));
   }
 
   .sheet-header {
