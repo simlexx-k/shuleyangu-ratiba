@@ -245,7 +245,16 @@ const standardTemplates = [
     subtitle: 'Blank template (manual filling)',
     days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
     rows: [
-      { time: '8:00 - 8:20', cells: ['', '', '', '', ''] },
+      {
+        time: '8:00 - 8:20',
+        cells: [
+          'Assembly, Health Check & Roll Call',
+          'Assembly, Health Check & Roll Call',
+          'Assembly, Health Check & Roll Call',
+          'Assembly, Health Check & Roll Call',
+          'Assembly, Health Check & Roll Call',
+        ],
+      },
       { time: '8:20 - 8:55', cells: ['', '', '', '', ''] },
       { time: '8:55 - 9:30', cells: ['', '', '', '', ''] },
       { time: '9:30 - 9:50', cells: ['BREAK', 'BREAK', 'BREAK', 'BREAK', 'BREAK'] },
