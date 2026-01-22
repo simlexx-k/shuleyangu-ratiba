@@ -493,7 +493,7 @@ const buildStandardTemplateHtml = (standard) => {
         <div class="sheet">
           <div class="print-header">
             <div class="print-brand">
-              <img class="print-logo" src="/logo.svg" alt="ShuleYangu logo" />
+              <img class="print-logo" src="/icons/icon-192.png" alt="ShuleYangu logo" />
               <div>
                 <div class="brand-text">ShuleYangu School Systems</div>
                 <h1>${escapeHtml(standard.title)}</h1>
@@ -628,7 +628,7 @@ const getSubject = (id) => {
   <div class="app">
     <header class="hero">
       <div class="brand">
-        <img class="brand-logo" src="/logo.svg" alt="ShuleYangu logo" />
+        <img class="brand-logo" src="/icons/icon-192.png" alt="ShuleYangu logo" />
         <div>
           <div class="eyebrow">ShuleYangu School Systems</div>
           <h1>Ratiba Timetable Studio</h1>
@@ -852,7 +852,7 @@ const getSubject = (id) => {
           <div class="sheet-header">
             <div>
               <div class="sheet-brand">
-                <img class="sheet-logo" src="/logo.svg" alt="ShuleYangu logo" />
+                <img class="sheet-logo" src="/icons/icon-192.png" alt="ShuleYangu logo" />
                 <span class="sheet-eyebrow">ShuleYangu School Systems • Ratiba</span>
               </div>
               <h2>{{ template.meta.schoolName }}</h2>
