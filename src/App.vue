@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useStorage } from '@vueuse/core'
 import { nanoid } from 'nanoid'
 
@@ -60,9 +60,230 @@ const defaultTemplate = {
   ],
 }
 
+const standardTemplates = [
+  {
+    id: 'ecde',
+    title: 'ECDE Class Timetable',
+    subtitle: 'Daily schedule (Monday to Friday)',
+    days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    rows: [
+      {
+        time: 'Before 8:30',
+        cells: [
+          'Free Choice Activities',
+          'Free Choice Activities',
+          'Free Choice Activities',
+          'Free Choice Activities',
+          'Free Choice Activities',
+        ],
+      },
+      {
+        time: '8:30 - 9:00',
+        cells: [
+          'Health Check & Roll Call',
+          'Health Check & Roll Call',
+          'Health Check & Roll Call',
+          'Health Check & Roll Call',
+          'Health Check & Roll Call',
+        ],
+      },
+      {
+        time: '9:00 - 9:30',
+        cells: [
+          'Language Activities',
+          'Mathematics Activities',
+          'Environmental Activities',
+          'Mathematics Activities',
+          'PPI',
+        ],
+      },
+      {
+        time: '9:30 - 10:00',
+        cells: [
+          'Mathematics Activities',
+          'Creative Activities',
+          'Religious Activities',
+          'Language Activities',
+          'Creative Activities',
+        ],
+      },
+      {
+        time: '10:00 - 10:10',
+        cells: ['BREAK', 'BREAK', 'BREAK', 'BREAK', 'BREAK'],
+      },
+      {
+        time: '10:10 - 10:40',
+        cells: [
+          'Creative Activities',
+          'Language Activities',
+          'Creative Activities',
+          'Creative Activities',
+          'Environmental Activities',
+        ],
+      },
+      {
+        time: '10:40 - 11:00',
+        cells: [
+          'Religious Activities',
+          'Environmental Activities',
+          'Language Activities',
+          'Environmental Activities',
+          'Language Activities',
+        ],
+      },
+      {
+        time: '11:00 - 11:30',
+        cells: [
+          'Environmental Activities',
+          'Creative Activities',
+          'Mathematical Activities',
+          'Religious Activities',
+          'Mathematical Activities',
+        ],
+      },
+      {
+        time: '11:30 - 12:00',
+        cells: ['LUNCH', 'LUNCH', 'LUNCH', 'LUNCH', 'LUNCH'],
+      },
+    ],
+  },
+  {
+    id: 'lower',
+    title: 'Lower Class Timetable',
+    subtitle: 'Daily schedule (Monday to Friday)',
+    days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    rows: [
+      {
+        time: '8:00 - 8:20',
+        cells: [
+          'Health Check & Roll Call',
+          'Health Check & Roll Call',
+          'Health Check & Roll Call',
+          'Health Check & Roll Call',
+          'PPI',
+        ],
+      },
+      {
+        time: '8:20 - 8:50',
+        cells: [
+          'Indigenous Language',
+          'Kiswahili Language',
+          'English Language',
+          'Mathematical Activities',
+          'English Language',
+        ],
+      },
+      {
+        time: '8:50 - 9:20',
+        cells: [
+          'Creative Activities',
+          'Mathematical Activities',
+          'Religious Activities',
+          'Creative Activities',
+          'Environmental Activities',
+        ],
+      },
+      {
+        time: '9:20 - 9:30',
+        cells: ['BREAK', 'BREAK', 'BREAK', 'BREAK', 'BREAK'],
+      },
+      {
+        time: '9:30 - 10:00',
+        cells: [
+          'English Language',
+          'English Language',
+          'Mathematical Activities',
+          'Environmental Activities',
+          'Kiswahili Language',
+        ],
+      },
+      {
+        time: '10:00 - 10:30',
+        cells: [
+          'Mathematical Activities',
+          'Creative Activities',
+          'Creative Activities',
+          'Kiswahili Language',
+          'Creative Activities',
+        ],
+      },
+      {
+        time: '10:30 - 11:00',
+        cells: ['BREAK', 'BREAK', 'BREAK', 'BREAK', 'BREAK'],
+      },
+      {
+        time: '11:00 - 11:30',
+        cells: [
+          'Religious Activities',
+          'Indigenous Language',
+          'Kiswahili Language',
+          'English Language',
+          'Mathematical Activities',
+        ],
+      },
+      {
+        time: '11:30 - 12:00',
+        cells: [
+          'Environmental Activities',
+          'Creative Activities',
+          'Environmental Activities',
+          'Creative Activities',
+          'Religious Activities',
+        ],
+      },
+      {
+        time: '12:00 - 12:30',
+        cells: ['LUNCH', 'LUNCH', 'LUNCH', 'LUNCH', 'LUNCH'],
+      },
+    ],
+  },
+  {
+    id: 'upper-primary',
+    title: 'Upper Primary Timetable',
+    subtitle: 'Blank template (manual filling)',
+    days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    rows: [
+      { time: '8:00 - 8:20', cells: ['', '', '', '', ''] },
+      { time: '8:20 - 8:55', cells: ['', '', '', '', ''] },
+      { time: '8:55 - 9:30', cells: ['', '', '', '', ''] },
+      { time: '9:30 - 9:50', cells: ['BREAK', 'BREAK', 'BREAK', 'BREAK', 'BREAK'] },
+      { time: '9:50 - 10:25', cells: ['', '', '', '', ''] },
+      { time: '10:25 - 11:00', cells: ['', '', '', '', ''] },
+      { time: '11:00 - 11:30', cells: ['BREAK', 'BREAK', 'BREAK', 'BREAK', 'BREAK'] },
+      { time: '11:30 - 12:05', cells: ['', '', '', '', ''] },
+      { time: '12:05 - 12:40', cells: ['', '', '', '', ''] },
+      { time: '12:40 - 2:00', cells: ['LUNCH', 'LUNCH', 'LUNCH', 'LUNCH', 'LUNCH'] },
+      { time: '2:00 - 2:35', cells: ['', '', '', '', ''] },
+      { time: '2:35 - 4:00', cells: ['', '', '', '', ''] },
+    ],
+  },
+  {
+    id: 'junior-school',
+    title: 'Junior School Timetable',
+    subtitle: 'Blank template (manual filling)',
+    days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    rows: [
+      { time: '8:20 - 9:00', cells: ['', '', '', '', ''] },
+      { time: '9:00 - 9:40', cells: ['', '', '', '', ''] },
+      { time: '9:40 - 9:50', cells: ['BREAK', 'BREAK', 'BREAK', 'BREAK', 'BREAK'] },
+      { time: '9:50 - 10:30', cells: ['', '', '', '', ''] },
+      { time: '10:30 - 11:10', cells: ['', '', '', '', ''] },
+      { time: '11:10 - 11:40', cells: ['BREAK', 'BREAK', 'BREAK', 'BREAK', 'BREAK'] },
+      { time: '11:40 - 12:20', cells: ['', '', '', '', ''] },
+      { time: '12:20 - 1:00', cells: ['', '', '', '', ''] },
+      { time: '1:00 - 2:00', cells: ['LUNCH', 'LUNCH', 'LUNCH', 'LUNCH', 'LUNCH'] },
+      { time: '2:00 - 2:40', cells: ['', '', '', '', ''] },
+      { time: '2:40 - 3:20', cells: ['', '', '', '', ''] },
+      { time: '3:20 - 4:45', cells: ['', '', '', '', ''] },
+    ],
+  },
+]
+
 const template = useStorage('ratiba_template_v1', defaultTemplate, undefined, {
   mergeDefaults: true,
 })
+
+const activeView = ref('builder')
 
 const sessionDraft = reactive({
   dayId: '',
@@ -96,6 +317,211 @@ const sessionMap = computed(() => {
   })
   return map
 })
+
+const escapeHtml = (value) => {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
+const cellClass = (value) => {
+  const normalized = String(value || '').trim().toLowerCase()
+  if (!normalized) return 'is-empty'
+  if (normalized === 'break') return 'is-break'
+  if (normalized === 'lunch') return 'is-lunch'
+  return ''
+}
+
+const parseTimeRange = (label) => {
+  if (!label.includes('-')) return { start: '', end: '' }
+  const parts = label.split('-').map(part => part.trim())
+  if (parts.length < 2) return { start: '', end: '' }
+  return { start: parts[0], end: parts.slice(1).join('-').trim() }
+}
+
+const buildTemplateFromStandard = (standard) => {
+  const baseDays = [
+    { id: 'mon', label: 'Monday', short: 'Mon' },
+    { id: 'tue', label: 'Tuesday', short: 'Tue' },
+    { id: 'wed', label: 'Wednesday', short: 'Wed' },
+    { id: 'thu', label: 'Thursday', short: 'Thu' },
+    { id: 'fri', label: 'Friday', short: 'Fri' },
+    { id: 'sat', label: 'Saturday', short: 'Sat' },
+  ]
+  const daySet = new Set(standard.days)
+  const days = baseDays.map(day => ({
+    ...day,
+    active: daySet.has(day.label),
+  }))
+
+  const timeSlots = standard.rows.map((row, index) => {
+    const parsed = parseTimeRange(row.time)
+    return {
+      id: `slot-${index + 1}`,
+      label: row.time,
+      start: parsed.start,
+      end: parsed.end,
+    }
+  })
+
+  const uniqueSubjects = []
+  standard.rows.forEach(row => {
+    row.cells.forEach(cell => {
+      const value = String(cell || '').trim()
+      if (!value) return
+      if (!uniqueSubjects.includes(value)) uniqueSubjects.push(value)
+    })
+  })
+
+  const fixedColors = {
+    BREAK: '#0f172a',
+    LUNCH: '#334155',
+    PPI: '#f97316',
+    'Health Check & Roll Call': '#2563eb',
+    'Free Choice Activities': '#0ea5a4',
+  }
+  const palette = ['#8b5cf6', '#16a34a', '#0ea5a4', '#f97316', '#2563eb', '#d97706']
+
+  const subjects = uniqueSubjects.map((name, index) => ({
+    id: nanoid(),
+    name,
+    color: fixedColors[name] || palette[index % palette.length],
+  }))
+  const subjectIdByName = new Map(subjects.map(subject => [subject.name, subject.id]))
+
+  const activeDayList = days.filter(day => day.active)
+  const sessions = []
+  standard.rows.forEach((row, rowIndex) => {
+    const slotId = timeSlots[rowIndex]?.id
+    if (!slotId) return
+    row.cells.forEach((cell, dayIndex) => {
+      const value = String(cell || '').trim()
+      if (!value) return
+      const day = activeDayList[dayIndex]
+      if (!day) return
+      sessions.push({
+        id: nanoid(),
+        dayId: day.id,
+        slotId,
+        subjectId: subjectIdByName.get(value),
+        teacher: '',
+        room: '',
+      })
+    })
+  })
+
+  return {
+    meta: {
+      schoolName: template.value.meta.schoolName,
+      className: standard.title,
+      term: template.value.meta.term,
+      academicYear: template.value.meta.academicYear,
+      coordinator: template.value.meta.coordinator,
+    },
+    days,
+    timeSlots,
+    subjects,
+    sessions,
+  }
+}
+
+const applyStandardTemplate = (standard) => {
+  template.value = buildTemplateFromStandard(standard)
+  activeView.value = 'builder'
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+const buildStandardTemplateHtml = (standard) => {
+  const timestamp = new Date().toLocaleString()
+  const headerCells = standard.days.map(day => `<th>${escapeHtml(day)}</th>`).join('')
+  const rows = standard.rows
+    .map(row => {
+      const cells = row.cells
+        .map(cell => {
+          const value = String(cell || '')
+          const blank = !value.trim()
+          const className = cellClass(value)
+          return `
+            <td class="${className}">
+              ${blank ? '<span class="blank-line"></span>' : escapeHtml(value)}
+            </td>
+          `
+        })
+        .join('')
+      return `
+        <tr>
+          <td class="time">${escapeHtml(row.time)}</td>
+          ${cells}
+        </tr>
+      `
+    })
+    .join('')
+
+  return `
+    <!doctype html>
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <title>${escapeHtml(standard.title)} - Ratiba</title>
+        <style>
+          * { box-sizing: border-box; }
+          body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; color: #0f172a; background: #f8fafc; }
+          .sheet { max-width: 980px; margin: 24px auto; background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; }
+          h1 { margin: 0; font-size: 22px; }
+          .subtitle { margin-top: 6px; font-size: 12px; color: #64748b; }
+          .meta { margin-top: 12px; display: flex; gap: 12px; font-size: 11px; color: #64748b; }
+          table { width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 12px; }
+          th, td { border: 1px solid #e2e8f0; padding: 8px; text-align: left; vertical-align: top; }
+          th { background: #f1f5f9; text-transform: uppercase; letter-spacing: 0.08em; font-size: 10px; }
+          td.time { font-weight: 600; background: #f8fafc; min-width: 120px; }
+          td.is-break { background: #fef3c7; font-weight: 600; }
+          td.is-lunch { background: #dbeafe; font-weight: 600; }
+          td.is-empty { background: #fff; }
+          .blank-line { display: block; border-bottom: 1px dashed #cbd5f5; height: 16px; }
+          .footer { margin-top: 16px; font-size: 11px; color: #94a3b8; }
+          @media print { body { background: #fff; } .sheet { border: none; box-shadow: none; } }
+        </style>
+      </head>
+      <body>
+        <div class="sheet">
+          <h1>${escapeHtml(standard.title)}</h1>
+          <div class="subtitle">${escapeHtml(standard.subtitle)}</div>
+          <div class="meta">
+            <div>Generated: ${escapeHtml(timestamp)}</div>
+            <div>Ratiba standard template</div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                ${headerCells}
+              </tr>
+            </thead>
+            <tbody>
+              ${rows}
+            </tbody>
+          </table>
+          <div class="footer">Create and customize timetables at Ratiba.</div>
+        </div>
+      </body>
+    </html>
+  `
+}
+
+const printStandardTemplate = (standard) => {
+  const win = window.open('', '_blank', 'width=1100,height=900')
+  if (!win) return
+  win.document.open()
+  win.document.write(buildStandardTemplateHtml(standard))
+  win.document.close()
+  win.focus()
+  setTimeout(() => {
+    win.print()
+  }, 300)
+}
 
 const handlePrint = () => {
   window.print()
@@ -198,12 +624,87 @@ const getSubject = (id) => {
         </div>
       </div>
       <div class="hero-actions no-print">
-        <button class="btn primary" type="button" @click="handlePrint">Print to PDF</button>
-        <button class="btn ghost" type="button" @click="resetTemplate">Reset</button>
+        <template v-if="activeView === 'builder'">
+          <button class="btn primary" type="button" @click="handlePrint">Print to PDF</button>
+          <button class="btn ghost" type="button" @click="resetTemplate">Reset</button>
+        </template>
+        <template v-else>
+          <button class="btn primary" type="button" @click="activeView = 'builder'">Back to builder</button>
+        </template>
       </div>
     </header>
 
-    <div class="layout">
+    <nav class="view-tabs no-print">
+      <button
+        class="view-tab"
+        :class="{ active: activeView === 'builder' }"
+        type="button"
+        @click="activeView = 'builder'"
+      >
+        Builder
+      </button>
+      <button
+        class="view-tab"
+        :class="{ active: activeView === 'templates' }"
+        type="button"
+        @click="activeView = 'templates'"
+      >
+        Standard templates
+      </button>
+    </nav>
+
+    <section v-if="activeView === 'templates'" class="templates">
+      <div class="templates-header">
+        <div>
+          <div class="eyebrow">Starter packs</div>
+          <h2>Standard timetable templates</h2>
+          <p>Pick a template, print as-is, or load it into the builder to customize.</p>
+        </div>
+      </div>
+      <div class="templates-grid">
+        <article v-for="standard in standardTemplates" :key="standard.id" class="template-card">
+          <div class="template-head">
+            <div>
+              <h3>{{ standard.title }}</h3>
+              <p>{{ standard.subtitle }}</p>
+            </div>
+            <div class="template-actions">
+              <button class="btn primary" type="button" @click="applyStandardTemplate(standard)">
+                Use template
+              </button>
+              <button class="btn" type="button" @click="printStandardTemplate(standard)">
+                Print
+              </button>
+            </div>
+          </div>
+          <div class="template-table-wrapper">
+            <table class="template-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th v-for="day in standard.days" :key="day">{{ day }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="row in standard.rows" :key="row.time">
+                  <td class="time">{{ row.time }}</td>
+                  <td
+                    v-for="(cell, index) in row.cells"
+                    :key="index"
+                    :class="cellClass(cell)"
+                  >
+                    <span v-if="cell">{{ cell }}</span>
+                    <span v-else class="blank-line"></span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div v-else class="layout">
       <aside class="editor no-print">
         <section class="panel">
           <h2>Template details</h2>

@@ -62,6 +62,30 @@
   flex-wrap: wrap;
 }
 
+.view-tabs {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.view-tab {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--muted);
+}
+
+.view-tab.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
 .layout {
   display: grid;
   grid-template-columns: minmax(320px, 1fr) 1.35fr;
@@ -237,6 +261,115 @@
   border-radius: 10px;
   font-size: 12px;
   cursor: pointer;
+}
+
+.templates {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.templates-header h2 {
+  margin: 8px 0 6px;
+  font-size: 26px;
+}
+
+.templates-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.templates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.template-card {
+  background: var(--paper-strong);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.08);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.template-head {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.template-head h3 {
+  margin: 0 0 6px;
+  font-size: 20px;
+}
+
+.template-head p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.template-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.template-table-wrapper {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+}
+
+.template-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  min-width: 520px;
+}
+
+.template-table th,
+.template-table td {
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  vertical-align: top;
+}
+
+.template-table th {
+  background: #f1f5f9;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 10px;
+}
+
+.template-table td.time {
+  font-weight: 600;
+  background: #f8fafc;
+  min-width: 120px;
+}
+
+.template-table td.is-break {
+  background: #fef3c7;
+  font-weight: 600;
+}
+
+.template-table td.is-lunch {
+  background: #dbeafe;
+  font-weight: 600;
+}
+
+.template-table td.is-empty {
+  background: #fff;
+}
+
+.template-table .blank-line {
+  display: block;
+  border-bottom: 1px dashed #cbd5f5;
+  height: 14px;
 }
 
 .preview {
@@ -457,6 +590,7 @@
 
   .hero,
   .editor,
+  .view-tabs,
   .no-print {
     display: none !important;
   }
