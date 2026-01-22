@@ -317,19 +317,16 @@ const newSlot = reactive({
 
 const activeDays = computed(() => template.value.days.filter(day => day.active))
 
-const formatTimeHeader = (value) => {
+const splitTimeHeader = (value) => {
   const text = String(value || '').trim()
-  if (!text.includes('-')) return text
-  return text.replace(/\s*-\s*/g, '–')
+  const parts = text.split(/\s*[-–]\s*/).map(part => part.trim()).filter(Boolean)
+  if (parts.length === 2 && /\d/.test(parts[0]) && /\d/.test(parts[1])) {
+    return { top: parts[0], bottom: parts[1], isRange: true }
+  }
+  return { top: text, bottom: '', isRange: false }
 }
 
-const formatTimeRange = (start, end) => {
-  if (!start && !end) return ''
-  if (!start || !end) return `${start || ''}${end || ''}`
-  return `${start}–${end}`
-}
-
-const getStandardTimeHeaders = (standard) => standard.rows.map(row => formatTimeHeader(row.time))
+const getStandardTimeHeaders = (standard) => standard.rows.map(row => splitTimeHeader(row.time))
 
 const getStandardDayRows = (standard) => {
   return standard.days.map((day, dayIndex) => ({
@@ -477,9 +474,14 @@ const buildStandardTemplateHtml = (standard) => {
       </div>
     `
     : ''
-  const headerCells = standard.rows
-    .map(row => `<th>${escapeHtml(formatTimeHeader(row.time))}</th>`)
-    .join('')
+  const buildTimeHeaderCell = (value) => {
+    const parts = splitTimeHeader(value)
+    if (parts.isRange) {
+      return `<th><span class="time-stack"><span>${escapeHtml(parts.top)}</span><span>${escapeHtml(parts.bottom)}</span></span></th>`
+    }
+    return `<th>${escapeHtml(parts.top)}</th>`
+  }
+  const headerCells = standard.rows.map(row => buildTimeHeaderCell(row.time)).join('')
   const rows = standard.days
     .map((day, dayIndex) => {
       const cells = standard.rows
@@ -574,6 +576,14 @@ const buildStandardTemplateHtml = (standard) => {
             font-size: 8px;
             color: var(--muted);
             white-space: nowrap;
+            text-align: center;
+          }
+          th:first-child { text-align: left; }
+          .time-stack {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
           }
           tbody tr:nth-child(even) td { background: #fbfdff; }
           td.day { font-weight: 600; background: var(--paper-alt); min-width: 130px; }
@@ -735,6 +745,29 @@ const shouldShowSlotRange = (slot) => {
   const range = `${slot.start}-${slot.end}`.toLowerCase().replace(/\s+/g, '')
   return !label.includes(range)
 }
+
+const getSlotHeader = (slot) => {
+  if (shouldShowSlotRange(slot)) {
+    return {
+      title: String(slot.label || '').trim(),
+      top: slot.start,
+      bottom: slot.end,
+      isRange: true,
+    }
+  }
+  const parts = splitTimeHeader(slot.label)
+  if (parts.isRange) {
+    return { title: '', top: parts.top, bottom: parts.bottom, isRange: true }
+  }
+  return { title: String(slot.label || '').trim(), top: '', bottom: '', isRange: false }
+}
+
+const slotHeaders = computed(() =>
+  template.value.timeSlots.map(slot => ({
+    id: slot.id,
+    header: getSlotHeader(slot),
+  }))
+)
 </script>
 
 <template>
@@ -807,7 +840,13 @@ const shouldShowSlotRange = (slot) => {
               <thead>
                 <tr>
                   <th>Day</th>
-                  <th v-for="time in getStandardTimeHeaders(standard)" :key="time">{{ time }}</th>
+                  <th v-for="(time, index) in getStandardTimeHeaders(standard)" :key="index">
+                    <span v-if="time.isRange" class="time-stack">
+                      <span>{{ time.top }}</span>
+                      <span>{{ time.bottom }}</span>
+                    </span>
+                    <span v-else>{{ time.top }}</span>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -998,10 +1037,11 @@ const shouldShowSlotRange = (slot) => {
           <div class="grid">
             <div class="grid-row header">
               <div class="grid-cell day">Day</div>
-              <div v-for="slot in template.timeSlots" :key="slot.id" class="grid-cell time">
-                <div class="slot-label">{{ formatTimeHeader(slot.label) }}</div>
-                <div v-if="shouldShowSlotRange(slot)" class="slot-time">
-                  {{ formatTimeRange(slot.start, slot.end) }}
+              <div v-for="item in slotHeaders" :key="item.id" class="grid-cell time">
+                <div v-if="item.header.title" class="slot-label">{{ item.header.title }}</div>
+                <div v-if="item.header.isRange" class="slot-time split">
+                  <span>{{ item.header.top }}</span>
+                  <span>{{ item.header.bottom }}</span>
                 </div>
               </div>
             </div>
