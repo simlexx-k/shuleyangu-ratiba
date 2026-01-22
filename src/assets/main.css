@@ -283,6 +283,16 @@
 
 .template-card {
   background: var(--paper-strong);
+  background-image:
+    linear-gradient(120deg, rgba(14, 165, 164, 0.08), transparent 60%),
+    linear-gradient(300deg, rgba(249, 115, 22, 0.08), transparent 55%),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(226, 232, 240, 0.6) 0px,
+      rgba(226, 232, 240, 0.6) 1px,
+      transparent 1px,
+      transparent 28px
+    );
   border-radius: 18px;
   border: 1px solid var(--border);
   box-shadow: 0 16px 30px rgba(15, 23, 42, 0.08);
@@ -376,6 +386,16 @@
 
 .sheet {
   background: var(--paper-strong);
+  background-image:
+    linear-gradient(135deg, rgba(14, 165, 164, 0.08), transparent 62%),
+    linear-gradient(320deg, rgba(249, 115, 22, 0.08), transparent 58%),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(226, 232, 240, 0.65) 0px,
+      rgba(226, 232, 240, 0.65) 1px,
+      transparent 1px,
+      transparent 32px
+    );
   border-radius: 20px;
   padding: 26px;
   border: 1px solid var(--border);
