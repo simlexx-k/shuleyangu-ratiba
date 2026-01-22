@@ -283,16 +283,8 @@
 
 .template-card {
   background: var(--paper-strong);
-  background-image:
-    linear-gradient(120deg, rgba(14, 165, 164, 0.08), transparent 60%),
-    linear-gradient(300deg, rgba(249, 115, 22, 0.08), transparent 55%),
-    repeating-linear-gradient(
-      to bottom,
-      rgba(226, 232, 240, 0.6) 0px,
-      rgba(226, 232, 240, 0.6) 1px,
-      transparent 1px,
-      transparent 28px
-    );
+  position: relative;
+  overflow: hidden;
   border-radius: 18px;
   border: 1px solid var(--border);
   box-shadow: 0 16px 30px rgba(15, 23, 42, 0.08);
@@ -300,6 +292,35 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+
+.template-card::before {
+  content: '';
+  position: absolute;
+  top: -70px;
+  right: -40px;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(14, 165, 164, 0.18), transparent 70%);
+  pointer-events: none;
+}
+
+.template-card::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: -40px;
+  width: 160px;
+  height: 160px;
+  border-radius: 40% 60% 50% 50%;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.16), transparent 70%);
+  pointer-events: none;
+}
+
+.template-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .template-head {
@@ -329,6 +350,7 @@
   overflow-x: auto;
   border-radius: 14px;
   border: 1px solid var(--border);
+  background: #fff;
 }
 
 .template-table {
@@ -386,20 +408,41 @@
 
 .sheet {
   background: var(--paper-strong);
-  background-image:
-    linear-gradient(135deg, rgba(14, 165, 164, 0.08), transparent 62%),
-    linear-gradient(320deg, rgba(249, 115, 22, 0.08), transparent 58%),
-    repeating-linear-gradient(
-      to bottom,
-      rgba(226, 232, 240, 0.65) 0px,
-      rgba(226, 232, 240, 0.65) 1px,
-      transparent 1px,
-      transparent 32px
-    );
+  position: relative;
+  overflow: hidden;
   border-radius: 20px;
   padding: 26px;
   border: 1px solid var(--border);
   box-shadow: var(--shadow);
+}
+
+.sheet::before {
+  content: '';
+  position: absolute;
+  top: -120px;
+  left: -80px;
+  width: 220px;
+  height: 220px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(14, 165, 164, 0.14), transparent 70%);
+  pointer-events: none;
+}
+
+.sheet::after {
+  content: '';
+  position: absolute;
+  bottom: -140px;
+  right: -100px;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.14), transparent 70%);
+  pointer-events: none;
+}
+
+.sheet > * {
+  position: relative;
+  z-index: 1;
 }
 
 .sheet-header {
