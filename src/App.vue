@@ -158,10 +158,10 @@ const standardTemplates = [
       {
         time: '8:00 - 8:20',
         cells: [
-          'Health Check & Roll Call',
-          'Health Check & Roll Call',
-          'Health Check & Roll Call',
-          'Health Check & Roll Call',
+          'Assembly, Health Check & Roll Call',
+          'Assembly, Health Check & Roll Call',
+          'Assembly, Health Check & Roll Call',
+          'Assembly, Health Check & Roll Call',
           'PPI',
         ],
       },
@@ -383,6 +383,7 @@ const buildTemplateFromStandard = (standard) => {
     LUNCH: '#334155',
     PPI: '#f97316',
     'Health Check & Roll Call': '#2563eb',
+    'Assembly, Health Check & Roll Call': '#2563eb',
     'Free Choice Activities': '#0ea5a4',
   }
   const palette = ['#8b5cf6', '#16a34a', '#0ea5a4', '#f97316', '#2563eb', '#d97706']
