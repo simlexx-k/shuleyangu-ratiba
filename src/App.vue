@@ -10,6 +10,7 @@ const defaultTemplate = {
     term: 'Term 1',
     academicYear: '2025',
     coordinator: 'Academic Office',
+    showGradeField: false,
   },
   days: [
     { id: 'mon', label: 'Monday', short: 'Mon', active: true },
@@ -436,6 +437,7 @@ const applyStandardTemplate = (standard) => {
 
 const buildStandardTemplateHtml = (standard) => {
   const timestamp = new Date().toLocaleString()
+  const gradeRow = template.value.meta.showGradeField ? '<div>Grade: ____________________</div>' : ''
   const headerCells = standard.days.map(day => `<th>${escapeHtml(day)}</th>`).join('')
   const rows = standard.rows
     .map(row => {
@@ -499,10 +501,11 @@ const buildStandardTemplateHtml = (standard) => {
                 <h1>${escapeHtml(standard.title)}</h1>
               </div>
             </div>
-            <div class="meta">
-              <div>Generated: ${escapeHtml(timestamp)}</div>
-              <div>Ratiba Standard Template</div>
-            </div>
+          <div class="meta">
+            <div>Generated: ${escapeHtml(timestamp)}</div>
+            <div>Ratiba Standard Template</div>
+            ${gradeRow}
+          </div>
           </div>
           <div class="subtitle">${escapeHtml(standard.subtitle)}</div>
           <table>
@@ -749,6 +752,10 @@ const shouldShowSlotRange = (slot) => {
               <input v-model="template.meta.coordinator" type="text" />
             </label>
           </div>
+          <label class="toggle-row">
+            <input v-model="template.meta.showGradeField" type="checkbox" />
+            <span>Include grade line on printouts</span>
+          </label>
         </section>
 
         <section class="panel">
@@ -873,6 +880,10 @@ const shouldShowSlotRange = (slot) => {
               <div>
                 <span class="meta-label">Generated</span>
                 <span class="meta-value">{{ new Date().toLocaleDateString() }}</span>
+              </div>
+              <div v-if="template.meta.showGradeField">
+                <span class="meta-label">Grade</span>
+                <span class="meta-value meta-line"></span>
               </div>
             </div>
           </div>
