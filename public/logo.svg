@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="ShuleYangu Portal logo">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#22c55e"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="16" fill="url(#g)"/>
+  <g fill="#fff">
+    <path d="M22 52l38-16 38 16-38 16-38-16z"/>
+    <path d="M30 58v16c0 2.2 1.8 4 4 4h52c2.2 0 4-1.8 4-4V58l-30 12-30-12z" opacity=".9"/>
+  </g>
+</svg>
