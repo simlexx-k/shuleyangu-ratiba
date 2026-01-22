@@ -469,7 +469,7 @@ const buildStandardTemplateHtml = (standard) => {
         <style>
           * { box-sizing: border-box; }
           body { margin: 0; font-family: 'Segoe UI', Arial, sans-serif; color: #0f172a; background: #f8fafc; }
-          .sheet { max-width: 980px; margin: 24px auto; background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; }
+          .sheet { max-width: 980px; margin: 24px auto; background: #fff; border: 1px solid #e2e8f0; border-radius: 0; padding: 24px; }
           .print-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; }
           .print-brand { display: flex; align-items: center; gap: 10px; }
           .print-logo { width: 36px; height: 36px; border-radius: 10px; border: 1px solid #e2e8f0; object-fit: cover; }
