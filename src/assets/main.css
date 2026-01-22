@@ -301,7 +301,7 @@
   background-image: url('/endless-constellation.svg');
   background-size: 320px;
   background-repeat: repeat;
-  opacity: 0.08;
+  opacity: 0.16;
   pointer-events: none;
 }
 
@@ -410,7 +410,7 @@
   background-image: url('/endless-constellation.svg');
   background-size: 420px;
   background-repeat: repeat;
-  opacity: 0.08;
+  opacity: 0.16;
   pointer-events: none;
 }
 
@@ -654,7 +654,7 @@
   }
 
   .sheet::before {
-    opacity: 0.04;
+    opacity: 0.08;
   }
 
   .grid-cell {
