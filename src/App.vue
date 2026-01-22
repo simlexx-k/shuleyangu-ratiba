@@ -567,13 +567,13 @@ const buildStandardTemplateHtml = (standard) => {
           .meta-label { text-transform: uppercase; letter-spacing: 0.16em; font-size: 9px; }
           .meta-value { font-weight: 600; color: var(--ink); }
           .meta-line { display: inline-block; min-width: 140px; border-bottom: 1px dashed var(--line); height: 14px; }
-          table { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 10px; position: relative; z-index: 1; }
-          th, td { border: 1px solid var(--line); padding: 6px 7px; text-align: left; vertical-align: top; }
+          table { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 9px; table-layout: fixed; position: relative; z-index: 1; }
+          th, td { border: 1px solid var(--line); padding: 5px 6px; text-align: left; vertical-align: top; }
           th {
             background: var(--paper-alt);
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            font-size: 8px;
+            font-size: 7px;
             color: var(--muted);
             white-space: nowrap;
             text-align: center;
