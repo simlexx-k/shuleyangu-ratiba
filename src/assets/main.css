@@ -297,24 +297,11 @@
 .template-card::before {
   content: '';
   position: absolute;
-  top: -70px;
-  right: -40px;
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(14, 165, 164, 0.18), transparent 70%);
-  pointer-events: none;
-}
-
-.template-card::after {
-  content: '';
-  position: absolute;
-  bottom: -60px;
-  left: -40px;
-  width: 160px;
-  height: 160px;
-  border-radius: 40% 60% 50% 50%;
-  background: radial-gradient(circle, rgba(249, 115, 22, 0.16), transparent 70%);
+  inset: -40px;
+  background-image: url('/endless-constellation.svg');
+  background-size: 320px;
+  background-repeat: repeat;
+  opacity: 0.08;
   pointer-events: none;
 }
 
@@ -419,24 +406,11 @@
 .sheet::before {
   content: '';
   position: absolute;
-  top: -120px;
-  left: -80px;
-  width: 220px;
-  height: 220px;
-  border-radius: 999px;
-  background: radial-gradient(circle, rgba(14, 165, 164, 0.14), transparent 70%);
-  pointer-events: none;
-}
-
-.sheet::after {
-  content: '';
-  position: absolute;
-  bottom: -140px;
-  right: -100px;
-  width: 240px;
-  height: 240px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.14), transparent 70%);
+  inset: -60px;
+  background-image: url('/endless-constellation.svg');
+  background-size: 420px;
+  background-repeat: repeat;
+  opacity: 0.08;
   pointer-events: none;
 }
 
@@ -677,6 +651,10 @@
     border: none;
     box-shadow: none;
     padding: 0;
+  }
+
+  .sheet::before {
+    opacity: 0.04;
   }
 
   .grid-cell {
