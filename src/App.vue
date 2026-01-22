@@ -317,6 +317,15 @@ const newSlot = reactive({
 
 const activeDays = computed(() => template.value.days.filter(day => day.active))
 
+const getStandardTimeHeaders = (standard) => standard.rows.map(row => row.time)
+
+const getStandardDayRows = (standard) => {
+  return standard.days.map((day, dayIndex) => ({
+    day,
+    cells: standard.rows.map(row => row.cells[dayIndex] ?? ''),
+  }))
+}
+
 const subjectMap = computed(() => {
   return new Map(template.value.subjects.map(subject => [subject.id, subject]))
 })
@@ -456,12 +465,12 @@ const buildStandardTemplateHtml = (standard) => {
       </div>
     `
     : ''
-  const headerCells = standard.days.map(day => `<th>${escapeHtml(day)}</th>`).join('')
-  const rows = standard.rows
-    .map(row => {
-      const cells = row.cells
-        .map(cell => {
-          const value = String(cell || '')
+  const headerCells = standard.rows.map(row => `<th>${escapeHtml(row.time)}</th>`).join('')
+  const rows = standard.days
+    .map((day, dayIndex) => {
+      const cells = standard.rows
+        .map(row => {
+          const value = String(row.cells[dayIndex] || '')
           const blank = !value.trim()
           const className = cellClass(value)
           return `
@@ -473,7 +482,7 @@ const buildStandardTemplateHtml = (standard) => {
         .join('')
       return `
         <tr>
-          <td class="time">${escapeHtml(row.time)}</td>
+          <td class="day">${escapeHtml(day)}</td>
           ${cells}
         </tr>
       `
@@ -546,7 +555,7 @@ const buildStandardTemplateHtml = (standard) => {
           th, td { border: 1px solid var(--line); padding: 9px 10px; text-align: left; vertical-align: top; }
           th { background: var(--paper-alt); text-transform: uppercase; letter-spacing: 0.08em; font-size: 10px; color: var(--muted); }
           tbody tr:nth-child(even) td { background: #fbfdff; }
-          td.time { font-weight: 600; background: var(--paper-alt); min-width: 130px; }
+          td.day { font-weight: 600; background: var(--paper-alt); min-width: 130px; }
           td.is-break { background: var(--break); font-weight: 600; }
           td.is-lunch { background: var(--lunch); font-weight: 600; }
           td.is-empty { background: #fff; }
@@ -584,7 +593,7 @@ const buildStandardTemplateHtml = (standard) => {
           <table>
             <thead>
               <tr>
-                <th>Time</th>
+                <th>Day</th>
                 ${headerCells}
               </tr>
             </thead>
@@ -776,15 +785,15 @@ const shouldShowSlotRange = (slot) => {
             <table class="template-table">
               <thead>
                 <tr>
-                  <th>Time</th>
-                  <th v-for="day in standard.days" :key="day">{{ day }}</th>
+                  <th>Day</th>
+                  <th v-for="time in getStandardTimeHeaders(standard)" :key="time">{{ time }}</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="row in standard.rows" :key="row.time">
-                  <td class="time">{{ row.time }}</td>
+                <tr v-for="dayRow in getStandardDayRows(standard)" :key="dayRow.day">
+                  <td class="day">{{ dayRow.day }}</td>
                   <td
-                    v-for="(cell, index) in row.cells"
+                    v-for="(cell, index) in dayRow.cells"
                     :key="index"
                     :class="cellClass(cell)"
                   >
@@ -967,20 +976,20 @@ const shouldShowSlotRange = (slot) => {
 
           <div class="grid">
             <div class="grid-row header">
-              <div class="grid-cell time">Time</div>
-              <div v-for="day in activeDays" :key="day.id" class="grid-cell day">
-                {{ day.label }}
-              </div>
-            </div>
-
-            <div v-for="slot in template.timeSlots" :key="slot.id" class="grid-row">
-              <div class="grid-cell time">
+              <div class="grid-cell day">Day</div>
+              <div v-for="slot in template.timeSlots" :key="slot.id" class="grid-cell time">
                 <div class="slot-label">{{ slot.label }}</div>
                 <div v-if="shouldShowSlotRange(slot)" class="slot-time">{{ slot.start }} - {{ slot.end }}</div>
               </div>
+            </div>
+
+            <div v-for="day in activeDays" :key="day.id" class="grid-row">
+              <div class="grid-cell day">
+                <div class="day-label">{{ day.label }}</div>
+              </div>
               <div
-                v-for="day in activeDays"
-                :key="day.id"
+                v-for="slot in template.timeSlots"
+                :key="slot.id"
                 class="grid-cell slot"
               >
                 <button

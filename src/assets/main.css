@@ -374,7 +374,7 @@
   font-size: 10px;
 }
 
-.template-table td.time {
+.template-table td.day {
   font-weight: 600;
   background: #f8fafc;
   min-width: 120px;
@@ -519,12 +519,23 @@
 }
 
 .grid-row.header .grid-cell.day {
-  text-align: center;
-  padding: 4px 6px;
+  text-align: left;
+  padding: 6px 10px;
   min-height: 52px;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+}
+
+.grid-row.header .grid-cell.time {
+  text-align: center;
+  padding: 6px;
+  min-height: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  gap: 4px;
 }
 
 .grid-cell {
@@ -535,8 +546,17 @@
   min-height: 80px;
 }
 
+.grid-cell.day {
+  background: #f1f5f9;
+  font-weight: 600;
+}
+
 .grid-cell.time {
   background: #f1f5f9;
+}
+
+.day-label {
+  font-size: 13px;
 }
 
 .slot-label {
