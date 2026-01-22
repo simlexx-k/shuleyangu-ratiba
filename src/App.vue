@@ -901,8 +901,8 @@ const getSubject = (id) => {
                   ></div>
                   <div class="session-info">
                     <strong>{{ getSubject(getSession(day.id, slot.id)?.subjectId)?.name || 'Session' }}</strong>
-                    <span>{{ getSession(day.id, slot.id)?.teacher || 'Teacher' }}</span>
-                    <span>{{ getSession(day.id, slot.id)?.room || 'Room' }}</span>
+                    <span v-if="getSession(day.id, slot.id)?.teacher">{{ getSession(day.id, slot.id)?.teacher }}</span>
+                    <span v-if="getSession(day.id, slot.id)?.room">{{ getSession(day.id, slot.id)?.room }}</span>
                   </div>
                   <span class="session-action no-print">Edit</span>
                 </button>
