@@ -371,7 +371,9 @@
   background: #f1f5f9;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  font-size: 10px;
+  font-size: 9px;
+  padding: 6px 8px;
+  white-space: nowrap;
 }
 
 .template-table td.day {
@@ -507,8 +509,8 @@
 
 .grid-row {
   display: grid;
-  grid-template-columns: 140px repeat(auto-fit, minmax(120px, 1fr));
-  gap: 8px;
+  grid-template-columns: 120px repeat(auto-fit, minmax(100px, 1fr));
+  gap: 6px;
 }
 
 .grid-row.header {
@@ -529,13 +531,13 @@
 
 .grid-row.header .grid-cell.time {
   text-align: center;
-  padding: 4px 6px;
-  min-height: 44px;
+  padding: 2px 4px;
+  min-height: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 2px;
 }
 
 .grid-cell {
@@ -560,14 +562,15 @@
 }
 
 .slot-label {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   white-space: nowrap;
 }
 
 .slot-time {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--muted);
+  letter-spacing: -0.01em;
   white-space: nowrap;
 }
 
@@ -657,7 +660,7 @@
   }
 
   .grid-row {
-    grid-template-columns: 130px repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: 120px repeat(auto-fit, minmax(100px, 1fr));
   }
 }
 
@@ -668,7 +671,7 @@
   }
 
   .grid-row {
-    grid-template-columns: 120px repeat(auto-fit, minmax(110px, 1fr));
+    grid-template-columns: 110px repeat(auto-fit, minmax(96px, 1fr));
   }
 
   .sheet-header {

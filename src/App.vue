@@ -317,7 +317,19 @@ const newSlot = reactive({
 
 const activeDays = computed(() => template.value.days.filter(day => day.active))
 
-const getStandardTimeHeaders = (standard) => standard.rows.map(row => row.time)
+const formatTimeHeader = (value) => {
+  const text = String(value || '').trim()
+  if (!text.includes('-')) return text
+  return text.replace(/\s*-\s*/g, '–')
+}
+
+const formatTimeRange = (start, end) => {
+  if (!start && !end) return ''
+  if (!start || !end) return `${start || ''}${end || ''}`
+  return `${start}–${end}`
+}
+
+const getStandardTimeHeaders = (standard) => standard.rows.map(row => formatTimeHeader(row.time))
 
 const getStandardDayRows = (standard) => {
   return standard.days.map((day, dayIndex) => ({
@@ -465,7 +477,9 @@ const buildStandardTemplateHtml = (standard) => {
       </div>
     `
     : ''
-  const headerCells = standard.rows.map(row => `<th>${escapeHtml(row.time)}</th>`).join('')
+  const headerCells = standard.rows
+    .map(row => `<th>${escapeHtml(formatTimeHeader(row.time))}</th>`)
+    .join('')
   const rows = standard.days
     .map((day, dayIndex) => {
       const cells = standard.rows
@@ -551,9 +565,16 @@ const buildStandardTemplateHtml = (standard) => {
           .meta-label { text-transform: uppercase; letter-spacing: 0.16em; font-size: 9px; }
           .meta-value { font-weight: 600; color: var(--ink); }
           .meta-line { display: inline-block; min-width: 140px; border-bottom: 1px dashed var(--line); height: 14px; }
-          table { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 12px; position: relative; z-index: 1; }
-          th, td { border: 1px solid var(--line); padding: 9px 10px; text-align: left; vertical-align: top; }
-          th { background: var(--paper-alt); text-transform: uppercase; letter-spacing: 0.08em; font-size: 10px; color: var(--muted); }
+          table { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 11px; position: relative; z-index: 1; }
+          th, td { border: 1px solid var(--line); padding: 7px 8px; text-align: left; vertical-align: top; }
+          th {
+            background: var(--paper-alt);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 9px;
+            color: var(--muted);
+            white-space: nowrap;
+          }
           tbody tr:nth-child(even) td { background: #fbfdff; }
           td.day { font-weight: 600; background: var(--paper-alt); min-width: 130px; }
           td.is-break { background: var(--break); font-weight: 600; }
@@ -978,8 +999,10 @@ const shouldShowSlotRange = (slot) => {
             <div class="grid-row header">
               <div class="grid-cell day">Day</div>
               <div v-for="slot in template.timeSlots" :key="slot.id" class="grid-cell time">
-                <div class="slot-label">{{ slot.label }}</div>
-                <div v-if="shouldShowSlotRange(slot)" class="slot-time">{{ slot.start }} - {{ slot.end }}</div>
+                <div class="slot-label">{{ formatTimeHeader(slot.label) }}</div>
+                <div v-if="shouldShowSlotRange(slot)" class="slot-time">
+                  {{ formatTimeRange(slot.start, slot.end) }}
+                </div>
               </div>
             </div>
 
