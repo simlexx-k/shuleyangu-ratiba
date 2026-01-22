@@ -492,15 +492,19 @@
 }
 
 .grid-row.header {
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
-  font-size: 10px;
-  letter-spacing: 0.1em;
+  font-size: 12px;
+  letter-spacing: 0.08em;
 }
 
-.grid-row.header .grid-cell {
-  min-height: 56px;
-  padding: 6px 8px;
+.grid-row.header .grid-cell.day {
+  text-align: center;
+  padding: 4px 6px;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .grid-cell {

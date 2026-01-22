@@ -622,6 +622,13 @@ const getSession = (dayId, slotId) => {
 const getSubject = (id) => {
   return subjectMap.value.get(id)
 }
+
+const shouldShowSlotRange = (slot) => {
+  if (!slot?.start || !slot?.end) return false
+  const label = String(slot.label || '').toLowerCase().replace(/\s+/g, '')
+  const range = `${slot.start}-${slot.end}`.toLowerCase().replace(/\s+/g, '')
+  return !label.includes(range)
+}
 </script>
 
 <template>
@@ -881,7 +888,7 @@ const getSubject = (id) => {
             <div v-for="slot in template.timeSlots" :key="slot.id" class="grid-row">
               <div class="grid-cell time">
                 <div class="slot-label">{{ slot.label }}</div>
-                <div class="slot-time">{{ slot.start }} - {{ slot.end }}</div>
+                <div v-if="shouldShowSlotRange(slot)" class="slot-time">{{ slot.start }} - {{ slot.end }}</div>
               </div>
               <div
                 v-for="day in activeDays"
