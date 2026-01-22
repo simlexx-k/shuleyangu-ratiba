@@ -515,24 +515,13 @@ const buildStandardTemplateHtml = (standard) => {
           .sheet::before {
             content: "";
             position: absolute;
-            top: -60px;
-            right: -40px;
-            width: 180px;
-            height: 180px;
-            background: radial-gradient(circle at top, rgba(14, 165, 164, 0.25), rgba(14, 165, 164, 0));
-            opacity: 0.8;
+            inset: 0;
+            background-image: url('/endless-constellation.svg');
+            background-size: 320px 320px;
+            opacity: 0.2;
             pointer-events: none;
           }
-          .sheet::after {
-            content: "";
-            position: absolute;
-            left: -60px;
-            bottom: -60px;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle at bottom, rgba(37, 99, 235, 0.18), rgba(37, 99, 235, 0));
-            pointer-events: none;
-          }
+          .sheet > * { position: relative; z-index: 1; }
           .print-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--line); padding-bottom: 14px; position: relative; z-index: 1; }
           .print-header::after {
             content: "";
